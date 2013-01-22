@@ -1,7 +1,7 @@
 This tool can dump the flash of a device with CFE bootloader into a file.
 It's compatible with all CFE bootloaders with "dm" command.
 
-Example: ./cfetool.py --read=test.bin --addr=0xB8000000 --size=0x20000 --block 0x10000
+Example: ./cfetool.py --read=test.bin --addr=0xB8000000 --size=0x20000 --block=0x10000
 --addr: Memory Address
 --size: Memory Size
 --block: Buffer size (Default: 10240 -> 10Kb)
