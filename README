@@ -6,5 +6,15 @@ Example: ./cfetool.py --read=test.bin --addr=0xB8000000 --size=0x20000 --block=0
 --size: Memory Size
 --block: Buffer size (Default: 10240 -> 10Kb)
 
+Example: ./zyx1tool.py --read=test.bin --addr=0xB8000000 --size=0x20000 --block=0x10000
+--addr: Memory Address
+--size: Memory Size
+--block: Buffer size (Default: 10240 -> 10Kb)
+
+Example: ./zyx2tool.py --read=test.bin --addr=0xB8000000 --size=0x20000 --block=0x10000
+--addr: Memory Address
+--size: Memory Size
+--block: Buffer size (Default: 10240 -> 10Kb)
+
 Homepage: https://github.com/Noltari/cfetool
 Based on brntool (@rvalles): Homepage: https://github.com/rvalles/brntool
