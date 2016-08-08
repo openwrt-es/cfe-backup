@@ -6,9 +6,9 @@ from optparse import OptionParser
 import serial
 import sys
 import re
+import binascii
 
-lineregex = re.compile(r'(?:[0-9a-f]{8})(?:[:])((?: [0-9a-f]{2}){1,16})')
-#lineregex = re.compile(r'(?:[0-9a-f]{8})(?:[:])((?: [0-9a-f]{2}){1,16})(?:\s{4})(?:.{16})')
+lineregex = re.compile(r'(?:[0-9a-f]{8})(?:[:])((?: [0-9a-f]*){1,16})')
 
 def printf(string):
 	sys.stdout.write(string)
@@ -21,7 +21,7 @@ def skip_prompt(ser):
 def wait_prompt(ser):
 	printf("Waiting for a prompt...")
 	while True:
-		ser.write("\x03")
+		ser.write(b"\x03")
 		if(ser.read(1) == 'C' and ser.read(1) == 'F' and ser.read(1) == 'E' and ser.read(1) == '>'):
 			skip_prompt(ser)
 			printf(" OK\n")
@@ -33,9 +33,10 @@ def memreadblock(ser, addr, size):
 	buf=''
 	m = False
 	while not m:
-		m = lineregex.match(ser.readline().strip())
+		rsp = ser.readline().strip()
+		m = lineregex.match(rsp)
 	while m:
-		bytes = [chr(int(x, 16)) for x in m.group(1)[1:].split(' ')]
+		bytes = [binascii.unhexlify(x) for x in m.group(1)[1:].split(' ')]
 		buf+=''.join(bytes)
 		m = lineregex.match(ser.readline().strip())
 	return buf
