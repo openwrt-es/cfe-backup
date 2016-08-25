@@ -8,7 +8,7 @@ import sys
 import re
 import binascii
 
-lineregex = re.compile(r'(?:[0-9a-f]{8})(?:[:])((?: [0-9a-f]*){1,16})')
+lineregex = re.compile(r'(?:[0-9a-f]{8})(?:[:])((?: [0-9a-f]*){1,16})    ')
 
 def printf(string):
 	sys.stdout.write(string)
@@ -38,7 +38,8 @@ def memreadblock(ser, addr, size):
 	while m:
 		bytes = [binascii.unhexlify(x) for x in m.group(1)[1:].split(' ')]
 		buf+=''.join(bytes)
-		m = lineregex.match(ser.readline().strip())
+		rsp = ser.readline().strip()
+		m = lineregex.match(rsp.strip())
 	return buf
 
 def memreadblock2file(ser, fd, addr, size):
